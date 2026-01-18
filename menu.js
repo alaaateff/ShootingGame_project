@@ -177,6 +177,7 @@ if (passed) {
   if (level >= unlockedLevel && level < totalLevels) {
     unlockedLevel++;
     localStorage.setItem("unlockedLevel", unlockedLevel);
+    selectedLevel=unlockedLevel;      ;
     loadLevels();
     showPopup(`🎉 Congrats! You passed Level ${level} and unlocked Level ${unlockedLevel}!`);
   } else if (level === totalLevels) {
