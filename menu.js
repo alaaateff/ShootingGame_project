@@ -126,18 +126,41 @@ function showPopup(text, callback = null, buttonText = "OK") {
 /* ================= HOW TO PLAY ================= */
 howBtn.onclick = () => {
   showPopup(`
-    <h2>🎯 How to Play – Shooting Fruits</h2>
-    <ul>
-      <li>Shoot only the <strong>Safe targets (Fruits)</strong> to earn points 🍎</li>
-      <li><strong>Avoid Hazard targets (Bombs)</strong> – hitting one will cost a life 💣</li>
-      <li>You have <strong>3 lives </strong>. Game ends if all are lost </li>
-      <li>Score points quickly – targets shift states dynamically ⚡</li>
-      <li>Timer is running, so act fast and improve your <strong>High Score</strong> ⏱️</li>
-    </ul>
-    <div class="goal">Goal: Get the highest Combat Score possible and beat your personal best!</div>
-    <div class="tip">Tip: Focus, react fast, and don’t shoot the bombs! 🍎💣</div>
+    <div class="howContainer">
+      <div class="howIcon">🎮</div>
+      <h2>How to Play</h2>
+
+      <div class="howRow">
+        <div class="howBadge safe">🍎 Fruits</div>
+        <div class="howText">Shoot fruits to gain points.</div>
+      </div>
+
+      <div class="howRow">
+        <div class="howBadge danger">💣 Bombs</div>
+        <div class="howText">Avoid bombs — hitting one costs a life.</div>
+      </div>
+
+      <div class="howRow">
+        <div class="howBadge timer">⏱ Timer</div>
+        <div class="howText">Time is limited — finish before it runs out.</div>
+      </div>
+
+      <div class="howRow">
+        <div class="howBadge lives">❤️ Lives</div>
+        <div class="howText">You have <b>3 lives</b>. Lose all = Game Over.</div>
+      </div>
+
+      <div class="goalBox">
+        🎯 <b>Goal:</b> Collect fruits fast and beat your high score!
+      </div>
+
+      <div class="tipBox">
+        💡 <b>Tip:</b> Watch fruit ↔ bomb switching — timing matters!
+      </div>
+    </div>
   `);
 };
+
 
 /* ================= START GAME ================= */
 startBtn.onclick = () => {
