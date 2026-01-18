@@ -217,3 +217,16 @@ body {
   background: white;
   transform: scale(1.05);
 }
+
+
+/* Animation for the newest unlocked level */
+@keyframes pulseGold {
+  0% { box-shadow: 0 0 5px #f1c40f; transform: scale(1); }
+  50% { box-shadow: 0 0 25px #f1c40f; transform: scale(1.1); }
+  100% { box-shadow: 0 0 5px #f1c40f; transform: scale(1); }
+}
+
+.newLevelPulse {
+  animation: pulseGold 2s infinite ease-in-out;
+  border: 3px solid #fff !important;
+}
