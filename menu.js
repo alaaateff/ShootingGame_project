@@ -30,14 +30,20 @@ function getLevelInfo(level) {
 /* ================= CREATE LEVEL BUTTONS ================= */
 function loadLevels() {
   levelsContainer.innerHTML = "";
+  
+  // Default selection to the newest level if nothing is selected
+  if (!selectedLevel) {
+    selectedLevel = unlockedLevel;
+  }
+
   for (let i = 1; i <= totalLevels; i++) {
     const btn = document.createElement("button");
     btn.textContent = i;
     btn.classList.add("levelBtn");
 
-    if (i > unlockedLevel) btn.classList.add("locked");
-    else if (i === unlockedLevel) btn.style.background = "gold"; // current unlocked level
-    else btn.style.background = "#3498db"; // passed levels
+    if (i > unlockedLevel) {
+      btn.classList.add("locked");
+    }
 
     btn.onclick = () => {
       if (i <= unlockedLevel) {
@@ -45,28 +51,56 @@ function loadLevels() {
         updateLevelSelection();
       }
     };
-
     levelsContainer.appendChild(btn);
   }
+  
+  // This line ensures the colors are correct immediately
+  updateLevelSelection();
 }
+
 
 function updateLevelSelection() {
   const buttons = document.querySelectorAll(".levelBtn");
+  
   buttons.forEach((btn, index) => {
     const levelNum = index + 1;
-    if (levelNum > unlockedLevel) return; // skip locked
+
+    // Remove any previous pulse animation
+    btn.classList.remove("newLevelPulse");
+
+    // 1. LOCKED LEVELS
+    if (levelNum > unlockedLevel) {
+      btn.style.background = "#444";
+      btn.style.border = "3px solid #333";
+      btn.style.opacity = "0.6";
+      btn.style.cursor = "not-allowed";
+      return;
+    }
+
+    // 2. THE CURRENTLY SELECTED LEVEL (Gold)
     if (levelNum === selectedLevel) {
-      btn.style.border = "3px solid #00f"; // blue border for selected
-    } else if (levelNum === unlockedLevel) {
-      btn.style.border = "3px solid gold"; // highlight unlocked
       btn.style.background = "gold";
-    } else {
-      btn.style.border = "1px solid #3498db"; // passed
+      btn.style.color = "#000"; // Black text
+      btn.style.border = "4px solid #fff";
+      btn.style.boxShadow = "0 0 20px gold";
+      btn.style.transform = "scale(1.1)";
+      
+      // If it's also the highest unlocked level, add the pulse
+      if (levelNum === unlockedLevel) {
+        btn.classList.add("newLevelPulse");
+      }
+    } 
+    
+    // 3. PASSED/UNLOCKED BUT NOT SELECTED (Blue)
+    else {
       btn.style.background = "#3498db";
+      btn.style.color = "#000"; // Black text
+      btn.style.border = "3px solid rgba(255, 255, 255, 0.4)";
+      btn.style.boxShadow = "none";
+      btn.style.transform = "scale(1)";
     }
   });
 }
-
 loadLevels();
 
 /* ================= CONTEXTUAL POPUP FUNCTION ================= */
