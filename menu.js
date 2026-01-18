@@ -45,12 +45,12 @@ function loadLevels() {
       btn.classList.add("locked");
     }
 
-    btn.onclick = () => {
-      if (i <= unlockedLevel) {
-        selectedLevel = i;
-        updateLevelSelection();
-      }
-    };
+  btn.addEventListener("click", () => {
+  if (i <= unlockedLevel) {
+    selectedLevel = i;
+    updateLevelSelection();
+  }
+});
     levelsContainer.appendChild(btn);
   }
   
@@ -101,6 +101,7 @@ function updateLevelSelection() {
     }
   });
 }
+
 loadLevels();
 
 /* ================= CONTEXTUAL POPUP FUNCTION ================= */
@@ -116,16 +117,16 @@ function showPopup(text, callback = null, buttonText = "OK") {
 
   updatedClose.textContent = buttonText; // set button text
 
-  updatedClose.onclick = () => {
-    popup.classList.remove("show");
-    popup.classList.add("hidden");
-    if (callback) callback(); // run callback if provided
-  };
+updatedClose.addEventListener("click", () => {
+  popup.classList.remove("show");
+  popup.classList.add("hidden");
+  if (callback) callback(); // run callback if provided
+});
 }
 
 /* ================= HOW TO PLAY ================= */
-howBtn.onclick = () => {
-  showPopup(`
+howBtn.addEventListener("click",()=>{
+showPopup(`
     <div class="howContainer">
       <div class="howIcon">🎮</div>
       <h2>How to Play</h2>
@@ -159,16 +160,11 @@ howBtn.onclick = () => {
       </div>
     </div>
   `);
-};
-
+});
 
 /* ================= START GAME ================= */
-startBtn.onclick = () => {
-  if (!selectedLevel) {
-    showPopup("⚠️ Please select an unlocked level first!");
-    return;
-  }
-
+startBtn.addEventListener("click",  () => {
+  
   const info = getLevelInfo(selectedLevel);
 
   showPopup(`
@@ -182,44 +178,62 @@ startBtn.onclick = () => {
     localStorage.setItem("levelScore", info.score);
     window.location.href = "game.html";
   }, "Start Level"); // Button text customized
-};
+});
 
 /* ================= RESET PROGRESS ================= */
-resetBtn.onclick = () => {
+resetBtn.addEventListener("click" , () => {
   localStorage.setItem("unlockedLevel", 1);
   unlockedLevel = 1;
   selectedLevel = null;
   loadLevels();
   showPopup("Progress reset! Only Level 1 unlocked.");
-};
+});
 
 /* ================= HANDLE WIN/LOSE ================= */
 const passed = localStorage.getItem("levelPassed");
+const lost = localStorage.getItem("levelLost");
+
 if (passed) {
-  const level = parseInt(passed);
-  if (level >= unlockedLevel && level < totalLevels) {
-    unlockedLevel++;
-    localStorage.setItem("unlockedLevel", unlockedLevel);
-    selectedLevel=unlockedLevel;      ;
-    loadLevels();
-    showPopup(`🎉 Congrats! You passed Level ${level} and unlocked Level ${unlockedLevel}!`);
-  } else if (level === totalLevels) {
+    const levelJustFinished = parseInt(passed);
+    
+    // FIX: If you beat the level that matches your current max progress, 
+    // it MUST unlock the next one regardless of what level was 'selected' before.
+    if (levelJustFinished === unlockedLevel && unlockedLevel < totalLevels) {
+        unlockedLevel++; // Move progress forward
+        localStorage.setItem("unlockedLevel", unlockedLevel);
+        selectedLevel = unlockedLevel; // Auto-focus on the new Level 3
+        
+        loadLevels(); // Redraw buttons with new Gold/Blue/Locked states
+        showPopup(`🎉 Congrats! You passed Level ${levelJustFinished} ! Level ${unlockedLevel} is now UNLOCKED!`);
+    } 
+    else if (levelJustFinished === totalLevels) {
     showPopup(`🏆 You passed the final level! Amazing!`);
-  }
-  localStorage.removeItem("levelPassed");
+    }
+    // If you won an old level (like playing Level 1 when you already have Level 3)
+    else  {
+        selectedLevel = levelJustFinished;
+        loadLevels();
+      showPopup(`🌟 Level ${levelJustFinished} mastered once more! You’re on a roll!`);
+    }
+    
+    localStorage.removeItem("levelPassed");
 }
 
-const lost = localStorage.getItem("levelLost");
 if (lost) {
-  const lostLevel = parseInt(lost);
-  const info = getLevelInfo(lostLevel);
-  showPopup(`
-    ❌ You lost Level ${lostLevel}! 
-    <br>Time Limit: <strong>${info.time}s</strong>
-    <br>Score to Reach: <strong>${info.score}</strong>
-  `, () => {
-    selectedLevel = lostLevel; // select it automatically for retry
-    updateLevelSelection();
-  }, "Retry Level"); // Button text customized
-  localStorage.removeItem("levelLost");
+    const lostLevel = parseInt(lost);
+    const info = getLevelInfo(lostLevel);
+
+
+    selectedLevel = lostLevel;
+    loadLevels(); 
+
+    showPopup(`
+        <div class="howContainer">
+            <h2 style="color:#e74c3c;">❌ Level ${lostLevel} Failed</h2>
+            <p>Score Needed: <strong>${info.score}</strong></p>
+            <div class="tipBox">Keep practicing! You'll get it next time.</div>
+        </div>
+    `, null, "Retry Level");
+
+    localStorage.removeItem("levelLost");
 }
