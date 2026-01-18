@@ -1,211 +1,219 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Roboto:wght@700&display=swap');
+
 /* ================= BODY ================= */
 body {
   margin: 0;
-  font-family: 'Press Start 2P', cursive; /* arcade-style font */
-  background: url("images/bg.jpg") no-repeat center center/cover;
+  font-family: 'Bungee', cursive;
+  background: linear-gradient(rgba(0, 30, 0, 0.6), rgba(0, 0, 0, 0.7)), url("images/bg.jpg") no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
   color: #fff;
   overflow: hidden;
-  animation: backgroundPulse 6s ease-in-out infinite alternate;
 }
 
-/* subtle animated background effect */
-@keyframes backgroundPulse {
-  0% { filter: brightness(1); }
-  50% { filter: brightness(1.1); }
-  100% { filter: brightness(1); }
-}
-
-/* ================= MENU ================= */
+/* ================= MENU CONTAINER ================= */
 #menuContainer {
   text-align: center;
-  backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.5);
-  padding: 30px;
-  border-radius: 12px;
-  width: 380px;
-  border: 2px solid gold;
-  animation: popIn 0.5s ease-out;
+  backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.75);
+  padding: 50px;
+  border-radius: 30px;
+  width: 480px;
+  border: 2px solid #2ecc71;
+  box-shadow: 0 0 40px rgba(46, 204, 113, 0.2);
+  animation: slideUp 0.6s ease-out;
 }
 
-@keyframes popIn {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+@keyframes slideUp {
+  0% { transform: translateY(50px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }
 
 .title {
-  font-size: 32px;
-  margin-bottom: 20px;
-  color: gold;
-  text-shadow: 0 0 6px #ffd700;
+  font-size: 50px;
+  margin-bottom: 30px;
+  background: linear-gradient(#fff, #2ecc71);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(46, 204, 113, 0.5));
 }
 
 /* ================= BUTTONS ================= */
 .mainBtn {
-  width: 90%;
-  padding: 12px;
-  margin: 6px 0;
-  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  width: 100%;
+  padding: 16px;
+  margin: 10px 0;
+  background: #2ecc71;
   border: none;
-  border-radius: 8px;
-  font-size: 18px;
+  border-radius: 50px;
+  font-size: 22px;
+  font-family: 'Bungee', cursive;
   cursor: pointer;
-  transition: 0.3s;
-  color: #fff;
-  font-weight: bold;
+  transition: all 0.3s;
+  color: #003311;
+  box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
 }
 
 .mainBtn:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  transform: scale(1.03);
+  background: #fff;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
 }
 
 .red {
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-}
-.red:hover {
-  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  background: #e74c3c;
+  color: #fff;
 }
 
 #resetBtn {
-  width: 40%;
-  padding: 8px 12px;
-  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  padding: 8px 25px;
+  margin-top: 25px;
+  border-radius: 5px;
+  background: #e74c3c;
+  color: #003311; /* Normal state text color (dark) */
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#resetBtn:hover {
+  background: #c0392b;
+  color: #ffffff !important; /* This makes the message/text WHITE on hover */
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
 }
 
 /* ================= LEVEL BUTTONS ================= */
 .levelsTitle {
-  margin-top: 20px;
-  color: #f1c40f;
+  margin-top: 35px;
+  font-size: 24px;
+  color: #fff;
+  opacity: 0.9;
+  text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
 }
 
 #levelsContainer {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 15px;
+  margin-top: 15px;
 }
 
 .levelBtn {
-  padding: 10px 20px;
-  border-radius: 8px 8px 0 0;
-  font-size: 16px;
-  border: 2px solid #2980b9;
-  background: #3498db;
-  color: white;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  font-size: 24px;
+  font-family: 'Bungee', cursive;
   cursor: pointer;
-  transition: all 0.3s;
-}
-
-.levelBtn:hover {
-  transform: scale(1.1);
-}
-
-.levelBtn.locked {
-  background: #5dade2;
-  opacity: 0.6;
-  cursor: default;
-}
-
-/* ================= POPUP ================= */
-#popup {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  /* Force text to be black for visibility */
+  color: #000 !important; 
   display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Hover effect for playable levels */
+.levelBtn:hover:not(.locked) {
+  transform: scale(1.15) translateY(-5px);
+  filter: brightness(1.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+/* Locked levels - Greyed out */
+.levelBtn.locked {
+  background: #444 !important;
+  color: #777 !important;
+  border-color: #333;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ================= THE POPUP OVERLAY ================= */
+#popup {
+  position: fixed; /* This makes it independent of the menu box */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9); /* Darker overlay to focus on popup */
+  z-index: 10000; /* Extremely high to be on top of everything */
+  backdrop-filter: blur(8px);
+  
+  /* Centering Logic */
+  display: none; /* Hidden by default */
   justify-content: center;
   align-items: center;
-  z-index: 100;
-  animation: fadeIn 0.4s ease-out;
 }
 
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+/* Logic for showing */
+#popup.show {
+  display: flex !important;
 }
 
-#popupBox {
-  background: linear-gradient(135deg, #111, #222);
-  padding: 30px 30px;
-  border-radius: 12px;
-  width: 500px;
-  max-width: 90%;
-  text-align: center;
-  color: #f0f0f0;
-  font-family: 'Press Start 2P', cursive;
-  line-height: 1.6;
-  animation: popUp 0.3s ease-out;
-}
-
-@keyframes popUp {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-#popupBox h2 {
-  color: #f39c12;
-  font-size: 20px;
-  margin-bottom: 15px;
-}
-
-#popupBox p {
-  font-size: 14px;
-  margin: 10px 0;
-}
-
-#popupBox ul {
-  padding-left: 20px;
-  text-align: left;
-}
-
-#popupBox li {
-  margin-bottom: 8px;
-}
-
-#popupBox .goal {
-  color: #2ecc71;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-#popupBox .tip {
-  color: #e74c3c;
-  font-weight: bold;
-  margin-top: 8px;
-}
-
-#popupBox strong {
-  color: #3498db;
-}
-
-/* ================= POPUP BUTTON ================= */
-#popupBox button {
-  margin-top: 15px;
-  padding: 12px 20px;
-  background: linear-gradient(135deg, #f39c12, #f1c40f);
-  color: #111;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
-}
-
-#popupBox button:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #f1c40f, #f39c12);
-}
-
-/* Add this to hide the popup by default */
 .hidden {
   display: none !important;
 }
 
-/* Ensure the 'show' class makes it flex/visible */
-#popup.show {
-  display: flex;
+/* ============= THE POPUP BOX ITSELF ============= */
+#popupBox {
+  background: #1a1a1a;
+  border: 3px solid #2ecc71;
+  padding: 40px;
+  border-radius: 25px;
+  width: 90%;
+  max-width: 500px; /* Limits width */
+  max-height: 80vh; /* Limits height so it doesn't go off screen */
+  overflow-y: auto; /* Adds scrollbar if text is too long */
+  text-align: center;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+  animation: popCenter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: white;
+}
+
+@keyframes popCenter {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#popupBox h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #2ecc71;
+  font-family: 'Bungee', cursive;
+}
+
+#popupBox p, #popupBox li {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #ddd;
+  margin-bottom: 10px;
+}
+
+#popupBox button {
+  font-family: 'Bungee', cursive;
+  font-size: 18px;
+  padding: 12px 40px;
+  margin-top: 20px;
+  border-radius: 50px;
+  background: #2ecc71;
+  color: #003311;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#popupBox button:hover {
+  background: white;
+  transform: scale(1.05);
 }
