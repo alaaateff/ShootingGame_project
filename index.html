@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forest Shooter - Main Menu</title>
+  <link rel="stylesheet" href="menu_style.css">
+</head>
+<body>
+
+<div id="menuContainer">
+
+  <h1 class="title">Forest Shooter</h1>
+
+  <button id="startBtn" class="mainBtn">Start Game</button>
+  <button id="howBtn" class="mainBtn">How to Play</button>
+  
+
+  <h2 class="levelsTitle">Levels</h2>
+  <div id="levelsContainer"></div>
+<div style="text-align: center; margin-top: 5px;">
+  <button id="resetBtn" class="mainBtn red">Reset</button>
+
+
+</div>
+
+<!-- Popup -->
+<div id="popup" class="hidden">
+  <div id="popupBox">
+    <p id="popupText"></p>
+    <button id="closePopup">OK</button>
+  </div>
+</div>
+
+<script src="menu.js"></script>
+</body>
+</html>
