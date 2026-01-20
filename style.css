@@ -9,10 +9,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-canvas {
-  display: block;
-}
-
 .ui {
   position: fixed;
   top: 10px;
@@ -25,3 +21,22 @@ canvas {
   font-size: 18px;
   z-index: 10;
 }
+
+#game{
+  width: 100vw;
+  height: 100vh;
+  background: url(images/bg.jpg) no-repeat center center/cover;
+  position: relative;
+  overflow: hidden; 
+}
+
+.apple {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  object-fit: contain;   
+}
+
+
+
+
