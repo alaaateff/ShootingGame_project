@@ -2,9 +2,30 @@ const gameArea = document.getElementById("game");
 const MAX_APPLES = 5;
 const APPLE_SIZE = 50;
 const SPEED = 3;
+const CROSSHAIR_SIZE = 60; 
+const CROSSHAIR_SPEED = 8;
 
 let apples = [];
 let quarterCounts = [0, 0, 0, 0];
+
+const crosshair = createCrosshair();
+
+const keys = {
+  w: false,
+  a: false,
+  s: false,
+  d: false
+};
+
+document.addEventListener("keydown", (e) => {
+  const key = e.key.toLowerCase(); 
+  if (keys.hasOwnProperty(key)) keys[key] = true;
+});
+
+document.addEventListener("keyup", (e) => {
+  const key = e.key.toLowerCase();
+  if (keys.hasOwnProperty(key)) keys[key] = false;
+});
 
 
 function isOverlapping(x, y) {
@@ -66,11 +87,44 @@ function createApple() {
   };
 }
 
+function createCrosshair() {
+  const el = document.createElement("img");
+  el.src = "images/crosshair.png"; 
+  el.classList.add("crosshair");
+  
+  const x = window.innerWidth / 2 - CROSSHAIR_SIZE / 2;
+  const y = window.innerHeight / 2 - CROSSHAIR_SIZE / 2;
+  
+  el.style.left = x + "px";
+  el.style.top = y + "px";
+
+  gameArea.appendChild(el);
+
+  return { el, x, y };
+}
+
 while (apples.length < MAX_APPLES) {
   apples.push(createApple());
 }
 
 function update() {
+  if (keys.w) crosshair.y -= CROSSHAIR_SPEED;
+  if (keys.s) crosshair.y += CROSSHAIR_SPEED;
+  if (keys.a) crosshair.x -= CROSSHAIR_SPEED;
+  if (keys.d) crosshair.x += CROSSHAIR_SPEED;
+
+  if (crosshair.x < 0) crosshair.x = 0;
+  if (crosshair.y < 0) crosshair.y = 0;
+
+  if (crosshair.x > window.innerWidth - CROSSHAIR_SIZE) 
+      crosshair.x = window.innerWidth - CROSSHAIR_SIZE;
+  
+  if (crosshair.y > window.innerHeight - CROSSHAIR_SIZE) 
+      crosshair.y = window.innerHeight - CROSSHAIR_SIZE;
+
+  crosshair.el.style.left = crosshair.x + "px";
+  crosshair.el.style.top = crosshair.y + "px";
+
   apples.forEach( apple  => {
     // Move apple
     apple.x += apple.dx;
