@@ -4,6 +4,8 @@ const APPLE_SIZE = 50;
 const SPEED = 3;
 const CROSSHAIR_SIZE = 60; 
 const CROSSHAIR_SPEED = 8;
+const TRANSITION_TIME = 5000;
+const REMOVE_TIME = 7000;
 
 let apples = [];
 let quarterCounts = [0, 0, 0, 0];
@@ -83,7 +85,9 @@ function createApple() {
     dx: Math.cos(angle) * SPEED,//velocity
     dy: Math.sin(angle) * SPEED,
     quarter: q ,        // keep track of its quarter
-    quarterIndex: qi    // store index for later removal
+    quarterIndex: qi, // store index for later removal
+    spawnTime: Date.now(),
+    type: "safe"
   };
 }
 
@@ -108,6 +112,7 @@ while (apples.length < MAX_APPLES) {
 }
 
 function update() {
+
   if (keys.w) crosshair.y -= CROSSHAIR_SPEED;
   if (keys.s) crosshair.y += CROSSHAIR_SPEED;
   if (keys.a) crosshair.x -= CROSSHAIR_SPEED;
@@ -115,40 +120,55 @@ function update() {
 
   if (crosshair.x < 0) crosshair.x = 0;
   if (crosshair.y < 0) crosshair.y = 0;
-
   if (crosshair.x > window.innerWidth - CROSSHAIR_SIZE) 
       crosshair.x = window.innerWidth - CROSSHAIR_SIZE;
-  
   if (crosshair.y > window.innerHeight - CROSSHAIR_SIZE) 
       crosshair.y = window.innerHeight - CROSSHAIR_SIZE;
 
   crosshair.el.style.left = crosshair.x + "px";
   crosshair.el.style.top = crosshair.y + "px";
 
-  apples.forEach( apple  => {
-    // Move apple
+  const now = Date.now();
+
+  for (let i = apples.length - 1; i >= 0; i--) {
+    const apple = apples[i];
+
+    if (now - apple.spawnTime > REMOVE_TIME) {
+      apple.el.remove();
+      
+      quarterCounts[apple.quarterIndex]--;
+      
+      apples.splice(i, 1);
+      
+      apples.push(createApple());
+      
+      continue; 
+    }
+
+    if (apple.type === "safe" && now - apple.spawnTime > TRANSITION_TIME) {
+      apple.type = "bomb";
+      apple.el.src = "images/bomb.png";
+    }
+
+    /* 3. MOVEMENT */
     apple.x += apple.dx;
     apple.y += apple.dy;
 
-    // Bounce within its quarter
     const q = apple.quarter;
     if (apple.x <= q.x || apple.x >= q.x + q.w - APPLE_SIZE) apple.dx *= -1;
     if (apple.y <= q.y || apple.y >= q.y + q.h - APPLE_SIZE) apple.dy *= -1;
 
-    // Check collision with other apples
-    apples.forEach( other => {
-      if (apple === other) return; // skip itself
-
+    /* 4. COLLISION */
+    apples.forEach(other => {
+      if (apple === other) return;
+      
       const dx = apple.x - other.x;
       const dy = apple.y - other.y;
       const dist = Math.hypot(dx, dy);
 
       if (dist < APPLE_SIZE) {
-        // Bounce off: reverse velocity
         apple.dx *= -1;
         apple.dy *= -1;
-
-        // Slightly move them apart
         const overlap = APPLE_SIZE - dist / 2;
         apple.x += (dx / dist) * overlap;
         apple.y += (dy / dist) * overlap;
@@ -157,10 +177,10 @@ function update() {
       }
     });
 
-    // Update position on screen
+    /* 5. DRAW */
     apple.el.style.left = apple.x + "px";
     apple.el.style.top = apple.y + "px";
-  });
+  }
 }
 
 function loop() {
