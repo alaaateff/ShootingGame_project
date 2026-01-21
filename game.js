@@ -4,8 +4,9 @@ const APPLE_SIZE = 50;
 const SPEED = 3;
 const CROSSHAIR_SIZE = 60; 
 const CROSSHAIR_SPEED = 8;
-const TRANSITION_TIME = 5000;
-const REMOVE_TIME = 7000;
+const BOMB_TIME = 5000;
+const APPLE_AGAIN_TIME = 10000
+const REMOVE_TIME = 15000;
 
 let apples = [];
 let quarterCounts = [0, 0, 0, 0];
@@ -145,9 +146,13 @@ function update() {
       continue; 
     }
 
-    if (apple.type === "safe" && now - apple.spawnTime > TRANSITION_TIME) {
+    if (apple.type === "safe" && now - apple.spawnTime > BOMB_TIME) {
       apple.type = "bomb";
       apple.el.src = "images/bomb.png";
+    }
+    if(apple.type === "bomb" && now - apple.spawnTime > APPLE_AGAIN_TIME) {
+      apple.type = "safe"; 
+      apple.el.src = "images/apple.png";
     }
 
     /* 3. MOVEMENT */
