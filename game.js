@@ -13,12 +13,13 @@ let quarterCounts = [0, 0, 0, 0];
 
 const crosshair = createCrosshair();
 
+
+
 const keys = {
-  w: false,
-  a: false,
-  s: false,
-  d: false
+  w:false, a:false, s:false, d:false,
+  arrowup:false, arrowdown:false, arrowleft:false, arrowright:false
 };
+
 
 document.addEventListener("keydown", (e) => {
   const key = e.key.toLowerCase(); 
@@ -114,10 +115,12 @@ while (apples.length < MAX_APPLES) {
 
 function update() {
 
-  if (keys.w) crosshair.y -= CROSSHAIR_SPEED;
-  if (keys.s) crosshair.y += CROSSHAIR_SPEED;
-  if (keys.a) crosshair.x -= CROSSHAIR_SPEED;
-  if (keys.d) crosshair.x += CROSSHAIR_SPEED;
+ 
+if (keys.w || keys.arrowup) crosshair.y -= CROSSHAIR_SPEED;
+if (keys.s || keys.arrowdown) crosshair.y += CROSSHAIR_SPEED;
+if (keys.a || keys.arrowleft) crosshair.x -= CROSSHAIR_SPEED;
+if (keys.d || keys.arrowright) crosshair.x += CROSSHAIR_SPEED;
+
 
   if (crosshair.x < 0) crosshair.x = 0;
   if (crosshair.y < 0) crosshair.y = 0;
