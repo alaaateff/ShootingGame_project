@@ -1,7 +1,7 @@
 
 /* ================= STORAGE ================= */
 let unlockedLevel = parseInt(localStorage.getItem("unlockedLevel")) || 1;
-const totalLevels = 5;
+const totalLevels = 3;
 let selectedLevel = null; // track which level the user selects
 
 /* ================= UI ELEMENTS ================= */
@@ -16,11 +16,10 @@ const closePopup = document.getElementById("closePopup");
 
 /* ================= RANDOM LEVEL CONFIG ================= */
 const LEVEL_CONFIG = {
-  1: { time: 20, score: 5 },
-  2: { time: 25, score: 7 },
-  3: { time: 30, score: 9 },
-  4: { time: 35, score: 12 },
-  5: { time: 40, score: 15 }
+  1: { time: 30, score: 5 },
+  2: { time: 30, score: 10 },
+  3: { time: 60, score: 30 }
+  
 };
 
 function getLevelInfo(level) {
