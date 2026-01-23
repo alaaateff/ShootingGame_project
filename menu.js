@@ -14,6 +14,15 @@ const popup = document.getElementById("popup");
 const popupText = document.getElementById("popupText");
 const closePopup = document.getElementById("closePopup");
 
+
+const clickSound = document.getElementById("clickSound");
+const winSound = document.getElementById("winSound");
+const loseSound = document.getElementById("loseSound");
+const victorySound = document.getElementById("victorySound");
+
+let soundEnabled = true; // if you want toggle later
+
+
 /* ================= RANDOM LEVEL CONFIG ================= */
 const LEVEL_CONFIG = {
   1: { time: 30, score: 5 },
@@ -45,6 +54,7 @@ function loadLevels() {
     }
 
   btn.addEventListener("click", () => {
+    playClick();
   if (i <= unlockedLevel) {
     selectedLevel = i;
     updateLevelSelection();
@@ -117,14 +127,20 @@ function showPopup(text, callback = null, buttonText = "OK") {
   updatedClose.textContent = buttonText; // set button text
 
 updatedClose.addEventListener("click", () => {
+  playClick();
   popup.classList.remove("show");
   popup.classList.add("hidden");
-  if (callback) callback(); // run callback if provided
+
+  if (callback) {
+     setTimeout(callback, 100);  // run callback if provided
+  }
+  
 });
 }
 
 /* ================= HOW TO PLAY ================= */
 howBtn.addEventListener("click",()=>{
+   playClick();
 showPopup(`
     <div class="howContainer">
       <div class="howIcon">🎮</div>
@@ -137,17 +153,12 @@ showPopup(`
 
       <div class="howRow">
         <div class="howBadge danger">💣 Bombs</div>
-        <div class="howText">Avoid bombs — hitting one costs a life.</div>
+        <div class="howText">Avoid bombs — hitting one will reset your collected fruits .</div>
       </div>
 
       <div class="howRow">
         <div class="howBadge timer">⏱ Timer</div>
-        <div class="howText">Time is limited — finish before it runs out.</div>
-      </div>
-
-      <div class="howRow">
-        <div class="howBadge lives">❤️ Lives</div>
-        <div class="howText">You have <b>3 lives</b>. Lose all = Game Over.</div>
+        <div class="howText">Time is limited — Speed increases each level !! Finish before time runs out.</div>
       </div>
 
       <div class="goalBox">
@@ -163,7 +174,7 @@ showPopup(`
 
 /* ================= START GAME ================= */
 startBtn.addEventListener("click",  () => {
-  
+  playClick();
   const info = getLevelInfo(selectedLevel);
 
   showPopup(`
@@ -181,6 +192,7 @@ startBtn.addEventListener("click",  () => {
 
 /* ================= RESET PROGRESS ================= */
 resetBtn.addEventListener("click" , () => {
+   playClick();
   localStorage.setItem("unlockedLevel", 1);
   unlockedLevel = 1;
   selectedLevel = null;
@@ -193,6 +205,7 @@ const passed = localStorage.getItem("levelPassed");
 const lost = localStorage.getItem("levelLost");
 
 if (passed) {
+  playWin();
     const levelJustFinished = parseInt(passed);
     
     // FIX: If you beat the level that matches your current max progress, 
@@ -206,6 +219,7 @@ if (passed) {
         showPopup(`🎉 Congrats! You passed Level ${levelJustFinished} ! Level ${unlockedLevel} is now UNLOCKED!`);
     } 
     else if (levelJustFinished === totalLevels) {
+      playVictory();
     showPopup(`🏆 You passed the final level! Amazing!`);
     }
     // If you won an old level (like playing Level 1 when you already have Level 3)
@@ -219,6 +233,7 @@ if (passed) {
 }
 
 if (lost) {
+  playLose();
     const lostLevel = parseInt(lost);
     const info = getLevelInfo(lostLevel);
 
@@ -236,3 +251,33 @@ if (lost) {
 
     localStorage.removeItem("levelLost");
 }
+
+
+function playClick() {
+  if (soundEnabled) {
+    clickSound.currentTime = 0;
+    clickSound.play();
+  }
+}
+
+function playWin() {
+  if (soundEnabled) {
+    winSound.currentTime = 0;
+    winSound.play();
+  }
+}
+
+function playLose() {
+  if (soundEnabled) {
+    loseSound.currentTime = 0;
+    loseSound.play();
+  }
+}
+
+function playVictory() {
+  if (soundEnabled) {
+    victorySound.currentTime = 0;
+    victorySound.play();
+  }
+}
+
