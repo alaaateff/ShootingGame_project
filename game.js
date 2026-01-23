@@ -13,6 +13,7 @@ bgMusic.loop = true;
 bgMusic.volume = 0.3;
 let musicStarted = false;
 
+
 const bombSound = new Audio("sounds/bomb.mp3");
 bombSound.volume = 0.7;
 
@@ -145,9 +146,10 @@ function createCrosshair() {
 
   const x = window.innerWidth / 2 - CROSSHAIR_SIZE / 2;
   const y = window.innerHeight / 2 - CROSSHAIR_SIZE / 2;
-
+  el.style.position = "absolute";
   el.style.left = x + "px";
   el.style.top = y + "px";
+  el.style.zIndex = 5;
 
   gameArea.appendChild(el);
 
@@ -344,9 +346,9 @@ function vibrateCrosshair() {
 }
 
 
-
 function loop() {
-  update();
+  if (!gamePaused)
+    update();
   requestAnimationFrame(loop);// ضربة واحدة بسimationFrame(loop);
 }
 
