@@ -8,15 +8,19 @@ const BOMB_TIME = 5000;
 const APPLE_AGAIN_TIME = 10000
 const REMOVE_TIME = 15000;
 
+const bgMusic = new Audio("sounds/gameplaysound.mp3");
+bgMusic.loop = true;
+bgMusic.volume = 0.3;
+let musicStarted = false;
 
 
 const bombSound = new Audio("sounds/bomb.mp3");
 bombSound.volume = 0.7;
 
-const hitSound = new Audio("sounds/hit.mp3");
+const hitSound = new Audio("sounds/hit2.mp3");
 hitSound.volume = 0.7;
 
-const missSound = new Audio("sounds/miss.mp3");
+const missSound = new Audio("sounds/miss2.mp3");
 missSound.volume = 0.6;
 
 let frozen = false;
@@ -28,12 +32,26 @@ let reqTime = parseInt(localStorage.getItem("levelTime")) || 10;
 let currentLevel = parseInt(localStorage.getItem("currentLevel")) || 1;
 document.getElementById("score-no").textContent = reqScore;
 
+if (localStorage.getItem("audioUnlocked")) {
+  bgMusic.play().catch(() => {});
+}
 
-if (currentLevel == 2)
-  SPEED = 4;
-else if (currentLevel == 3)
+if (currentLevel === 1) {
+  game.style.background =
+    "url(images/bg.jpg) no-repeat center center / cover";
+} 
+else if (currentLevel == 2)
+{
+  SPEED=4;
+ game.style.background =
+    "url(images/bg3.jpg) no-repeat center center / cover";
+}
+else if ( currentLevel == 3)
+{
   SPEED = 7;
-
+  game.style.background =
+    "url(images/bg22.jpg) no-repeat center center / cover";
+}
 
 
 let apples = [];
@@ -295,6 +313,8 @@ document.addEventListener("keydown", (e) => {
 
 function endGame(gameStatus) {
   gameOver = true;
+  bgMusic.pause();
+  bgMusic.currentTime = 0
   let msg = "";
   if (gameStatus === "w") {
     //finsih game with janna conditions
