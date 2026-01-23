@@ -2,7 +2,7 @@
 /* ================= STORAGE ================= */
 let unlockedLevel = parseInt(localStorage.getItem("unlockedLevel")) || 1;
 const totalLevels = 3;
-let selectedLevel = null; // track which level the user selects
+let selectedLevel = null; 
 
 /* ================= UI ELEMENTS ================= */
 const levelsContainer = document.getElementById("levelsContainer");
@@ -20,7 +20,7 @@ const winSound = document.getElementById("winSound");
 const loseSound = document.getElementById("loseSound");
 const victorySound = document.getElementById("victorySound");
 
-let soundEnabled = true; // if you want toggle later
+let soundEnabled = true; 
 
 
 /* ================= RANDOM LEVEL CONFIG ================= */
@@ -39,7 +39,7 @@ function getLevelInfo(level) {
 function loadLevels() {
   levelsContainer.innerHTML = "";
   
-  // Default selection to the newest level if nothing is selected
+  
   if (!selectedLevel) {
     selectedLevel = unlockedLevel;
   }
@@ -63,7 +63,7 @@ function loadLevels() {
     levelsContainer.appendChild(btn);
   }
   
-  // This line ensures the colors are correct immediately
+  
   updateLevelSelection();
 }
 
@@ -74,7 +74,7 @@ function updateLevelSelection() {
   buttons.forEach((btn, index) => {
     const levelNum = index + 1;
 
-    // Remove any previous pulse animation
+    
     btn.classList.remove("newLevelPulse");
 
     // 1. LOCKED LEVELS
@@ -94,16 +94,16 @@ function updateLevelSelection() {
       btn.style.boxShadow = "0 0 20px gold";
       btn.style.transform = "scale(1.1)";
       
-      // If it's also the highest unlocked level, add the pulse
+      
       if (levelNum === unlockedLevel) {
         btn.classList.add("newLevelPulse");
       }
     } 
     
-    // 3. PASSED/UNLOCKED BUT NOT SELECTED (Blue)
+    // 3. PASSED/UNLOCKED BUT NOT SELECTED 
     else {
       btn.style.background = "#3498db";
-      btn.style.color = "#000"; // Black text
+      btn.style.color = "#000"; 
       btn.style.border = "3px solid rgba(255, 255, 255, 0.4)";
       btn.style.boxShadow = "none";
       btn.style.transform = "scale(1)";
@@ -119,20 +119,18 @@ function showPopup(text, callback = null, buttonText = "OK") {
   popup.classList.remove("hidden");
   popup.classList.add("show");
 
-  // Remove old event listener first
+  
   const newClose = closePopup;
-  newClose.replaceWith(newClose.cloneNode(true)); // remove old listeners
-  const updatedClose = document.getElementById("closePopup"); // get the new button
-
-  updatedClose.textContent = buttonText; // set button text
-
+  newClose.replaceWith(newClose.cloneNode(true)); 
+  const updatedClose = document.getElementById("closePopup"); 
+  updatedClose.textContent = buttonText; 
 updatedClose.addEventListener("click", () => {
   playClick();
   popup.classList.remove("show");
   popup.classList.add("hidden");
 
   if (callback) {
-     setTimeout(callback, 100);  // run callback if provided
+     setTimeout(callback, 100);  
   }
   
   
@@ -189,7 +187,7 @@ startBtn.addEventListener("click",  () => {
     localStorage.setItem("levelTime", info.time);
     localStorage.setItem("levelScore", info.score);
     window.location.href = "game.html";
-  }, "Start Level"); // Button text customized
+  }, "Start Level"); 
 });
 
 /* ================= RESET PROGRESS ================= */
@@ -210,21 +208,20 @@ if (passed) {
   playWin();
     const levelJustFinished = parseInt(passed);
     
-    // FIX: If you beat the level that matches your current max progress, 
-    // it MUST unlock the next one regardless of what level was 'selected' before.
+    
     if (levelJustFinished === unlockedLevel && unlockedLevel < totalLevels) {
         unlockedLevel++; // Move progress forward
         localStorage.setItem("unlockedLevel", unlockedLevel);
-        selectedLevel = unlockedLevel; // Auto-focus on the new Level 3
+        selectedLevel = unlockedLevel; 
         
-        loadLevels(); // Redraw buttons with new Gold/Blue/Locked states
+        loadLevels(); 
         showPopup(`🎉 Congrats! You passed Level ${levelJustFinished} ! Level ${unlockedLevel} is now UNLOCKED!`);
     } 
     else if (levelJustFinished === totalLevels) {
       playVictory();
     showPopup(`🏆 You passed the final level! Amazing!`);
     }
-    // If you won an old level (like playing Level 1 when you already have Level 3)
+    
     else  {
         selectedLevel = levelJustFinished;
         loadLevels();
