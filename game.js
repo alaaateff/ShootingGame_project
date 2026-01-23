@@ -1,7 +1,7 @@
 const gameArea = document.getElementById("game");
 const MAX_APPLES = 5;
 const APPLE_SIZE = 50;
-const SPEED = 3;
+let SPEED = 2;
 const CROSSHAIR_SIZE = 60;
 const CROSSHAIR_SPEED = 8;
 const BOMB_TIME = 5000;
@@ -26,6 +26,12 @@ let reqScore = parseInt(localStorage.getItem("levelScore")) || 1;
 let reqTime = parseInt(localStorage.getItem("levelTime")) || 10;
 let currentLevel = parseInt(localStorage.getItem("currentLevel")) || 1;
 document.getElementById("score-no").textContent = reqScore;
+
+
+if (currentLevel == 2)
+  SPEED=4;
+else if ( currentLevel == 3)
+  SPEED = 7;
 
 
 
