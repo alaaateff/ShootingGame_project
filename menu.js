@@ -135,6 +135,7 @@ updatedClose.addEventListener("click", () => {
      setTimeout(callback, 100);  // run callback if provided
   }
   
+  
 });
 }
 
@@ -281,3 +282,10 @@ function playVictory() {
   }
 }
 
+const closeX = document.querySelector(".close-x-btn");
+
+closeX.addEventListener("click", () => {
+  playClick();  
+  popup.classList.remove("show");
+  popup.classList.add("hidden");
+});
