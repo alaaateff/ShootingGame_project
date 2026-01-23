@@ -312,21 +312,18 @@ body {
 /* ================= CLOSE X BUTTON ================= */
 .close-x-btn {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 4px 8px;
-  border-radius: 6px;   /* rectangle with rounded corners */
-  background: #333 !important;
-  color: #fff  !important;
+  top: -12px;
+  right: -12px;
+  background: transparent !important;
   border: none !important;
-  font-size: 18px;
+  color: #fff !important;
+  font-size: 100px;
+   padding: 5px; 
   cursor: pointer;
   transition: 0.2s;
 }
 
 .close-x-btn:hover {
-  background: #e74c3c !important ;
-  border-color: #c0392b  !important;
+  color: #e74c3c !important;
 }
-
 
