@@ -1,3 +1,4 @@
+let gamePaused = false;
 const reqlevelno = parseInt(localStorage.getItem("currentLevel")) || 1;
 var levelnumber = document.getElementById("level-no");
 levelnumber.textContent = reqlevelno;
@@ -32,6 +33,8 @@ scorenumber.textContent = reqscoreno;
         p_in_popup.style.fontFamily = "Russo One";
         p_in_popup.style.fontSize = "xx-large";
         popup.style.display = "flex";
+        popup.style.position = "absolute";
+        //popup.style.zIndex = 10; 
         clearInterval(timenow);
         // clearInterval(scorenow);
         var bg = document.getElementById("game");
@@ -50,6 +53,7 @@ var timer = parseInt(document.getElementById("time-no").textContent);
 var time10 = document.getElementsByClassName("timer")[0];
 console.log(typeof timer);
 var timenow = setInterval(function () {
+    if(!gamePaused){
     timer--;
     time_no.textContent = timer;
     console.log(timer);
@@ -60,6 +64,7 @@ var timenow = setInterval(function () {
     }
     if (timer == 0) {
         var popup = document.getElementById("pop-up");
+        popup.style.position = "absolute";
         popup.style.display = "flex";
         clearInterval(timenow);
         var bg = document.getElementById("game");
@@ -69,6 +74,7 @@ var timenow = setInterval(function () {
         //      window.location.href = "index.html";
         // }, 2000);
     }
+}
 
 }, 1000);
 
@@ -102,19 +108,38 @@ exit_button.addEventListener("click", function () {
         outerpopup.style.display = "none";
         var confirming = document.getElementById("confirming_exit");
         confirming.style.display = "flex";
-        clearInterval(timenow);
+        outerpopup.style.position = "absolute";
+        gamePaused = true;
+        //clearInterval(timenow);
     }
     else {
         var confirming = document.getElementById("confirming_exit");
         confirming.style.display = "flex";
-        clearInterval(timenow);
+        outerpopup.style.position = "absolute";
+        gamePaused = true;
+        //clearInterval(timenow);
     }
 });
 
 var yes_button = document.getElementById("yes_button");
 yes_button.addEventListener("click", function () { window.location.href = "index.html" });  //return to main menu
 
-// var no_button = document.getElementById("no_button");
-// no_button.addEventListener("click", function () { window.location.reload() });  //restart the game
 
+function resumeGame() {
+  gamePaused = false;
+  document.getElementById("confirming_exit").style.display = "none";
 
+}
+
+var no_button = document.getElementById("no_button");
+no_button.addEventListener("click", resumeGame);  //resume the game
+
+const exitBtn = document.getElementById("exit-button");
+
+document.addEventListener("mousedown", () => {
+  exitBtn.classList.add("using-mouse");
+});
+
+document.addEventListener("keydown", () => {
+  exitBtn.classList.remove("using-mouse");
+});

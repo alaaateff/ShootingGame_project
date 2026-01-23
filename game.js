@@ -9,6 +9,7 @@ const APPLE_AGAIN_TIME = 10000
 const REMOVE_TIME = 15000;
 
 
+
 const bombSound = new Audio("sounds/bomb.mp3");
 bombSound.volume = 0.7;
 
@@ -29,8 +30,8 @@ document.getElementById("score-no").textContent = reqScore;
 
 
 if (currentLevel == 2)
-  SPEED=4;
-else if ( currentLevel == 3)
+  SPEED = 4;
+else if (currentLevel == 3)
   SPEED = 7;
 
 
@@ -127,9 +128,10 @@ function createCrosshair() {
 
   const x = window.innerWidth / 2 - CROSSHAIR_SIZE / 2;
   const y = window.innerHeight / 2 - CROSSHAIR_SIZE / 2;
-
+  el.style.position = "absolute";
   el.style.left = x + "px";
   el.style.top = y + "px";
+  el.style.zIndex = 5;
 
   gameArea.appendChild(el);
 
@@ -324,9 +326,9 @@ function vibrateCrosshair() {
 }
 
 
-
 function loop() {
-  update();
+  if (!gamePaused)
+    update();
   requestAnimationFrame(loop);// ضربة واحدة بسimationFrame(loop);
 }
 
