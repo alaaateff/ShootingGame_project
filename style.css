@@ -10,17 +10,252 @@ body {
 }
 
 .ui {
-  position: fixed;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  display: flex;
-  justify-content: space-between;
-  color: white;
-  font-size: 18px;
-  z-index: 10;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 10px 16px;
+    border-radius: 10px;
+    z-index: 10;
 }
+
+.level,
+.timer,
+.score,
+.exit {
+    margin: 0;
+    position: relative;
+}
+
+.level {
+    position: relative;
+    color: white;
+    /* margin-left: 6px; */
+    /* margin-top: 6px; */
+    font-size: x-large;
+    font-family: 'Russo One';
+    text-shadow: 1px 1px 2px #04AA6D;
+}
+
+.timer {
+    position: relative;
+    color: white;
+    /* margin-left: 40%; */
+    /* margin-top: 6px; */
+    font-size: x-large;
+    font-family: 'Russo One';
+    text-shadow: 1px 1px 2px #04AA6D;
+    display: inline-block;
+    transition: transform 0.15s ease-in-out;
+    /* top: 10px;
+  left: 10px; */
+}
+
+.letter {
+    font-family: 'Russo One';
+    text-shadow: 1px 1px 2px #04AA6D;
+}
+
+.score {
+    position: relative;
+    color: white;
+    /* margin-left: 55%; */
+    /* margin-top: 6px; */
+    font-size: x-large;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+}
+
+#apple-score {
+    width: 30px;
+    height: 30px;
+    /* background-color: brown; */
+    /* border: 2px solid brown;
+  border-radius: 20px; */
+    filter: contrast(150%);
+    filter: saturate(200%);
+    /* filter: drop-shadow(8px 8px 10px #04AA6D); */
+}
+
+.exit {
+    position: relative;
+    right: 10px;
+    /* margin-top: 6px; */
+
+}
+
+#exit-button {
+    cursor: pointer;
+    background-color: #04AA6D;
+    width: 60px;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 8px;
+    border: 2px solid #04AA6D;
+    font-family: 'Russo One';
+}
+
+#pop-up {
+    position: fixed;
+    width: 500px;
+    height: 250px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    box-shadow: 0 0 50px rgba(4, 170, 109, 0.7);
+    display: none;
+    z-index: 20;
+}
+
+#game-over {
+    font-size: xx-large;
+    font-family: 'Russo One';
+    text-shadow: 1px 1px 2px #04AA6D;
+
+}
+
+#play-again {
+    margin-top: 8px;
+    cursor: pointer;
+    background-color: #04AA6D;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 8px;
+    border: 2px solid #04AA6D;
+    font-family: 'Russo One';
+}
+
+#game-container {
+    position: relative;
+    /* needed for absolute overlay inside it */
+}
+
+#canvas-overlay {
+    position: absolute;
+    /* positioned relative to container */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    z-index: 1;
+    /* below UI and pop-up */
+}
+
+#confirming_exit {
+    position: fixed;
+    width: 500px;
+    height: 250px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    box-shadow: 0 0 50px rgba(4, 170, 109, 0.7);
+    display: none;
+    z-index: 20;
+
+}
+
+#button_row {
+    display: flex;
+    gap: 10px;
+    /* space between buttons */
+    justify-content: center;
+    /* center buttons horizontally */
+    margin-top: 25px;
+    /* optional spacing from the question text */
+}
+
+#yes_button {
+    cursor: pointer;
+    background-color: #04AA6D;
+    width: 60px;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 8px;
+    border: 2px solid #04AA6D;
+    font-family: 'Russo One';
+    margin-right: 15px;
+}
+
+#no_button {
+    cursor: pointer;
+    background-color: #04AA6D;
+    width: 60px;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 8px;
+    border: 2px solid #04AA6D;
+    font-family: 'Russo One';
+}
+
+#sure {
+    font-size: larger;
+    font-family: 'Russo One';
+    text-shadow: 1px 1px 2px #04AA6D;
+    
+}
+
+#numbers{
+    position: fixed;
+    color: white;
+    /* margin-left: 40%; */
+    /* margin-top: 6px; */
+    font-size: 5rem;
+    font-family: 'Russo One';
+    text-shadow: 1px 1px 2px #04AA6D;
+    display: inline-block;
+    transition: transform 0.15s ease-in-out;
+    /* top: 10px;
+  left: 10px; */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 20;
+}
+
+
+.pump {
+  color: red !important;
+  transform: scale(1.3) translateZ(0);
+  z-index: 10;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.pump-back {
+  color: white !important;
+  transform: scale(1);
+  z-index: 1;
+}
+
 
 #game{
   width: 100vw;

@@ -25,8 +25,7 @@ let gameOver = false;
 let reqScore = parseInt(localStorage.getItem("levelScore")) || 1;
 let reqTime = parseInt(localStorage.getItem("levelTime")) || 10;
 let currentLevel = parseInt(localStorage.getItem("currentLevel")) || 1;
-document.getElementById("score").textContent = reqScore;
-
+document.getElementById("score-no").textContent = reqScore;
 
 
 
@@ -247,17 +246,18 @@ document.addEventListener("keydown", (e) => {
         frozen = false;
         hitSound.currentTime = 0;
         hitSound.play();
-        reqScore--;      // apple
+        updateScore("w");    // apple
       } else if (apple.type === "bomb") {
         frozen = true;
         hitSomething = false;
         bombSound.currentTime = 0;
         bombSound.play();
         bombPlayed = true;
-        reqScore++;      // bomb
+        updateScore("l");
+        //reqScore++;      // bomb
       }
 
-      document.getElementById("score").textContent = reqScore;
+      //document.getElementById("score-no").textContent = reqScore;
       apples.push(createApple());
 
       break; // hit one object only

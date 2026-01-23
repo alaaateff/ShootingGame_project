@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Crosshair Shooter</title>
-  <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="hud.css">
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
 
 </head>
+
 <body>
 
-<div class="ui">
+  <div class="ui">
     <div class="level">Level : <span id="level-no">1</span></div>
     <div class="timer">Timer : <span id="time-no"></span></div>
-    <div class="score">
+    <div id="score" class="score">
       <img id="apple-score" src="images/apple.png">
-      <span id="score-no" class="letter">10</span>
+      <span id="score-no" class="letter"></span>
     </div>
     <div id = "confirming_exit">
         <p id="sure">Are you sure you want to exit?</p>
@@ -31,13 +33,13 @@
     <!-- <button id="play-again">Play Again</button> -->
   </div>
   <div id="numbers"></div>
-<!-- <div id="game-container">
+<div id="game-container">
   <canvas id="game"></canvas>
   <div id="canvas-overlay"></div>
-</div> -->
-
-<div id="game"></div>
-<script src="hud.js"></script>
-<script src="game.js"></script>
+</div>
+  <script src="game.js"></script>
+  <script src="hud.js"></script>
+  
 </body>
+
 </html>
