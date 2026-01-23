@@ -175,6 +175,7 @@ showPopup(`
 /* ================= START GAME ================= */
 startBtn.addEventListener("click",  () => {
   playClick();
+  localStorage.setItem("audioUnlocked", "true");
   const info = getLevelInfo(selectedLevel);
 
   showPopup(`
