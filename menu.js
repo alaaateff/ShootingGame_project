@@ -1,5 +1,5 @@
 
-
+//make a local storage to to be updated to tracl what levels are unlcoked
 let unlockedLevel = parseInt(localStorage.getItem("unlockedLevel")) || 1;
 const totalLevels = 3;
 let selectedLevel = null; 
@@ -17,8 +17,9 @@ const closePopup = document.getElementById("closePopup");
 
 const clickSound = document.getElementById("clickSound");
 const winSound = document.getElementById("winSound");
-const loseSound = document.getElementById("loseSound");
 const victorySound = document.getElementById("victorySound");
+const loseSound = document.getElementById("loseSound");
+
 
 let soundEnabled = true; 
 
