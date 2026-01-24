@@ -1,7 +1,6 @@
-/* Import fonts */
+
 @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Roboto:wght@700&display=swap');
 
-/* ================= BODY ================= */
 body {
   margin: 0;
   font-family: 'Bungee', cursive;
@@ -15,7 +14,7 @@ body {
   overflow: hidden;
 }
 
-/* ================= MENU CONTAINER ================= */
+
 #menuContainer {
   text-align: center;
   backdrop-filter: blur(15px);
@@ -43,7 +42,7 @@ body {
   filter: drop-shadow(0 0 10px rgba(46, 204, 113, 0.5));
 }
 
-/* ================= BUTTONS ================= */
+
 .mainBtn {
   width: 100%;
   padding: 16px;
@@ -90,7 +89,7 @@ body {
   box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
 }
 
-/* ================= LEVEL BUTTONS ================= */
+
 .levelsTitle {
   margin-top: 35px;
   font-size: 24px;
@@ -130,7 +129,7 @@ body {
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
-/* Locked levels - Greyed out */
+
 .levelBtn.locked {
   background: #444 !important;
   color: #777 !important;
@@ -139,7 +138,6 @@ body {
   opacity: 0.6;
 }
 
-/* ================= THE POPUP OVERLAY ================= */
 #popup {
   position: fixed; 
   top: 0;
@@ -166,7 +164,7 @@ body {
   display: none !important;
 }
 
-/* ============= THE POPUP BOX ITSELF ============= */
+
 #popupBox {
   position: relative;
   background: #1a1a1a;
@@ -174,7 +172,7 @@ body {
   padding: 40px;
   border-radius: 25px;
   width: 90%;
-  max-width: 500px; /* Limits width */
+  max-width: 500px; 
   max-height: 80vh;
   text-align: center;
   box-shadow: 0 0 50px rgba(0, 0, 0, 1);
@@ -215,7 +213,7 @@ body {
 }
 
 
-/* Animation for the newest unlocked level */
+
 @keyframes pulseGold {
   0% { box-shadow: 0 0 5px #f1c40f; transform: scale(1); }
   50% { box-shadow: 0 0 25px #f1c40f; transform: scale(1.1); }
@@ -226,7 +224,7 @@ body {
   animation: pulseGold 2s infinite ease-in-out;
   border: 3px solid #fff !important;
 }
-/* ================= HOW-TO-PLAY POPUP DESIGN ================= */
+
 .howContainer {
   text-align: left;
   font-family: 'Roboto', sans-serif;
@@ -308,7 +306,7 @@ body {
   font-size: 17px;
 }
 
-/* ================= CLOSE X BUTTON ================= */
+
 .close-x-btn {
   position: absolute;
   top: -12px;
