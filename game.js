@@ -213,7 +213,7 @@ function update() {
       apple.el.src = "images/apple.png";
     }
 
-    // movement
+    // move
     apple.x += apple.dx;
     apple.y += apple.dy;
 
