@@ -33,21 +33,19 @@ let currentLevel = parseInt(localStorage.getItem("currentLevel")) || 1;
 document.getElementById("score-no").textContent = reqScore;
 
 if (localStorage.getItem("audioUnlocked")) {
-  bgMusic.play().catch(() => {});
+  bgMusic.play().catch(() => { });
 }
 
 if (currentLevel === 1) {
   game.style.background =
     "url(images/bg.jpg) no-repeat center center / cover";
-} 
-else if (currentLevel == 2)
-{
-  SPEED=4;
- game.style.background =
+}
+else if (currentLevel == 2) {
+  SPEED = 4;
+  game.style.background =
     "url(images/bg3.jpg) no-repeat center center / cover";
 }
-else if ( currentLevel == 3)
-{
+else if (currentLevel == 3) {
   SPEED = 7;
   game.style.background =
     "url(images/bg22.jpg) no-repeat center center / cover";
@@ -87,17 +85,16 @@ function getQuarters() {
   const h = window.innerHeight / 2;
 
   const quarters = [
-    { x: 0, y: 0, w, h },      // top-left
-    { x: w, y: 0, w, h },      // top-right
-    { x: 0, y: h, w, h },      // bottom-left
-    { x: w, y: h, w, h }       // bottom-right
+    { x: 0, y: 0, w, h },
+    { x: w, y: 0, w, h },
+    { x: 0, y: h, w, h },
+    { x: w, y: h, w, h }
   ];
 
-  // Find least crowded quarter
+  //least crowded quarter and inc count
   const min = Math.min(...quarterCounts);
   const index = quarterCounts.indexOf(min);
 
-  // Increase count 
   quarterCounts[index]++;
   return { quarter: quarters[index], index };
 }
@@ -105,8 +102,18 @@ function getQuarters() {
 
 function createApple() {
   const apple = document.createElement("img");
-  apple.src = "images/apple.png";
+  // apple.src = "images/apple.png";
   apple.classList.add("apple");
+
+  let type = "safe";
+
+  if (currentLevel === 2 && Math.random() < 0.4) {
+    type = "bomb";
+    apple.src = "images/bomb.png";
+  } else {
+    apple.src = "images/apple.png";
+  }
+
 
   const { quarter: q, index: qi } = getQuarters();
 
@@ -132,10 +139,10 @@ function createApple() {
     x, y,
     dx: Math.cos(angle) * SPEED,//velocity
     dy: Math.sin(angle) * SPEED,
-    quarter: q,        // keep track of its quarter
-    quarterIndex: qi, // store index for later removal
+    quarter: q,
+    quarterIndex: qi,
     spawnTime: Date.now(),
-    type: "safe"
+    type: type
   };
 }
 
@@ -206,15 +213,17 @@ function update() {
       apple.el.src = "images/apple.png";
     }
 
-    /* 3. MOVEMENT */
+    // movement
     apple.x += apple.dx;
     apple.y += apple.dy;
 
     const q = apple.quarter;
-    if (apple.x <= q.x || apple.x >= q.x + q.w - APPLE_SIZE) apple.dx *= -1;
-    if (apple.y <= q.y || apple.y >= q.y + q.h - APPLE_SIZE) apple.dy *= -1;
+    if (apple.x <= q.x) { apple.x = q.x; apple.dx *= -1; }
+    if (apple.x >= q.x + q.w - APPLE_SIZE) { apple.x = q.x + q.w - APPLE_SIZE; apple.dx *= -1; }
+    if (apple.y <= q.y) { apple.y = q.y; apple.dy *= -1; }
+    if (apple.y >= q.y + q.h - APPLE_SIZE) { apple.y = q.y + q.h - APPLE_SIZE; apple.dy *= -1; }
 
-    /* 4. COLLISION */
+    // collision
     apples.forEach(other => {
       if (apple === other) return;
 
@@ -222,7 +231,7 @@ function update() {
       const dy = apple.y - other.y;
       const dist = Math.hypot(dx, dy);
 
-      if (dist < APPLE_SIZE) {
+      if (dist > 0 && dist < APPLE_SIZE) {
         apple.dx *= -1;
         apple.dy *= -1;
         const overlap = APPLE_SIZE - dist / 2;
@@ -233,7 +242,7 @@ function update() {
       }
     });
 
-    /* 5. DRAW */
+
     apple.el.style.left = apple.x + "px";
     apple.el.style.top = apple.y + "px";
   }
