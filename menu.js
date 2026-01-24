@@ -1,10 +1,10 @@
 
-/* ================= STORAGE ================= */
+
 let unlockedLevel = parseInt(localStorage.getItem("unlockedLevel")) || 1;
 const totalLevels = 3;
 let selectedLevel = null; 
 
-/* ================= UI ELEMENTS ================= */
+
 const levelsContainer = document.getElementById("levelsContainer");
 const startBtn = document.getElementById("startBtn");
 const howBtn = document.getElementById("howBtn");
@@ -23,7 +23,7 @@ const victorySound = document.getElementById("victorySound");
 let soundEnabled = true; 
 
 
-/* ================= RANDOM LEVEL CONFIG ================= */
+
 const LEVEL_CONFIG = {
   1: { time: 30, score: 5 },
   2: { time: 30, score: 10 },
@@ -35,7 +35,7 @@ function getLevelInfo(level) {
   return LEVEL_CONFIG[level];
 }
 
-/* ================= CREATE LEVEL BUTTONS ================= */
+// fucnction to create buttons for levels and check which is locked and whic is not based on unlocked level
 function loadLevels() {
   levelsContainer.innerHTML = "";
   
@@ -67,7 +67,7 @@ function loadLevels() {
   updateLevelSelection();
 }
 
-
+//fuction for different colors and button altitude if it is selected or not and locked or not
 function updateLevelSelection() {
   const buttons = document.querySelectorAll(".levelBtn");
   
@@ -77,7 +77,7 @@ function updateLevelSelection() {
     
     btn.classList.remove("newLevelPulse");
 
-    // 1. LOCKED LEVELS
+   
     if (levelNum > unlockedLevel) {
       btn.style.background = "#444";
       btn.style.border = "3px solid #333";
@@ -86,7 +86,7 @@ function updateLevelSelection() {
       return;
     }
 
-    // 2. THE CURRENTLY SELECTED LEVEL (Gold)
+    
     if (levelNum === selectedLevel) {
       btn.style.background = "gold";
       btn.style.color = "#000"; // Black text
@@ -100,7 +100,7 @@ function updateLevelSelection() {
       }
     } 
     
-    // 3. PASSED/UNLOCKED BUT NOT SELECTED 
+   
     else {
       btn.style.background = "#3498db";
       btn.style.color = "#000"; 
@@ -113,7 +113,7 @@ function updateLevelSelection() {
 
 loadLevels();
 
-/* ================= CONTEXTUAL POPUP FUNCTION ================= */
+//made a function for pop up message to customize the ok button with retry level or start level
 function showPopup(text, callback = null, buttonText = "OK") {
   popupText.innerHTML = text;
   popup.classList.remove("hidden");
@@ -137,7 +137,7 @@ updatedClose.addEventListener("click", () => {
 });
 }
 
-/* ================= HOW TO PLAY ================= */
+
 howBtn.addEventListener("click",()=>{
    playClick();
 showPopup(`
@@ -171,7 +171,7 @@ showPopup(`
   `);
 });
 
-/* ================= START GAME ================= */
+
 startBtn.addEventListener("click",  () => {
   playClick();
   localStorage.setItem("audioUnlocked", "true");
@@ -182,7 +182,7 @@ startBtn.addEventListener("click",  () => {
     <br>Time Limit: <strong>${info.time}s</strong>
     <br>Score to Reach: <strong>${info.score}</strong>
   `, () => {
-    // Callback runs when "Start Level" clicked
+// send selected level ,info:time and score because it will be used in hu.js for updating score and time
     localStorage.setItem("currentLevel", selectedLevel);
     localStorage.setItem("levelTime", info.time);
     localStorage.setItem("levelScore", info.score);
@@ -190,7 +190,7 @@ startBtn.addEventListener("click",  () => {
   }, "Start Level"); 
 });
 
-/* ================= RESET PROGRESS ================= */
+
 resetBtn.addEventListener("click" , () => {
    playClick();
   localStorage.setItem("unlockedLevel", 1);
@@ -200,7 +200,7 @@ resetBtn.addEventListener("click" , () => {
   showPopup("Progress reset! Only Level 1 unlocked.");
 });
 
-/* ================= HANDLE WIN/LOSE ================= */
+
 const passed = localStorage.getItem("levelPassed");
 const lost = localStorage.getItem("levelLost");
 
@@ -210,7 +210,7 @@ if (passed) {
     
     
     if (levelJustFinished === unlockedLevel && unlockedLevel < totalLevels) {
-        unlockedLevel++; // Move progress forward
+        unlockedLevel++; 
         localStorage.setItem("unlockedLevel", unlockedLevel);
         selectedLevel = unlockedLevel; 
         
